@@ -25,35 +25,35 @@ AIFoundryDemo is a demo application for monitoring AI projects using Azure AI Fo
 
 ## Installation
 1. Clone the repository:
-    git clone <repository_url>
-    cd aifoundrydemo
+    <code>git clone <repository_url>
+    cd aifoundrydemo</code>
 
 
 2. Create a virtual environment:
-    python -m venv .venv
+    <code>python -m venv .venv</code>
 
 
 3. Activate the virtual environment:
     - On Windows:
-        .venv\Scripts\activate
+        <code>.venv\Scripts\activate</code>
 
     - On macOS/Linux:
-        source .venv/bin/activate
+        <code>source .venv/bin/activate</code>
 
 4. Install the required packages:
-    pip install -r requirements.txt
+    <code>pip install -r requirements.txt</code>
 
 ## Local Run
 1. Set up your Azure credentials and configuration in environment variables or a configuration file.
 
 2. Run the main script:
-    python3 app.py
+    <code>python3 app.py</code>
 
 3. Run below to call Chat API
-    curl -X POST "http://localhost:5001//chat/products" -H "Content-Type: application/json"  -d '{"query":"Tell me good trekking wear for mount Everest climb","enable-telemetry":"False"}'
+    <code>curl -X POST "http://localhost:5001//chat/products" -H "Content-Type: application/json"  -d '{"query":"Tell me good trekking wear for mount Everest climb","enable-telemetry":"False"}'</code>
 
 4. Run below to call Evalution API
-    curl -X GET "http://localhost:5001/chat/evaluations"
+    <code>curl -X GET "http://localhost:5001/chat/evaluations"</code>
 
 ## Deployment to Managed Endpoint
 The AIFoundryDemo can be deployed to a managed endpoint using the provided Jupyter notebook. Follow these steps:
@@ -104,7 +104,6 @@ The AIFoundryDemo can be deployed to a managed endpoint using the provided Jupyt
     response = requests.get(f"{url}/chat/evaluations", headers=headers)   # Genearete evaluation for the prior LLM conversation
     print(f"Evaluation Response:\n", response)
 </code>
-
 
 ## Processing Screenshots
 - **Tracing**
