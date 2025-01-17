@@ -68,18 +68,43 @@ The AIFoundryDemo can be deployed to a managed endpoint using the provided Jupyt
     - Follow the step-by-step instructions in the notebook to configure and deploy your application to the managed endpoint.
 
 ## Test the Deployment
-Send a request to the deployed endpoint:
+1. **Send a POST request to the deployed endpoint /chat/products**:
 
-    <code>
+<code>
     import requests, json
+    from urllib.parse import urlsplit
 
-    url = "https://<endpoint_name>.azurewebsites.net/score"
-    headers = {"Authorization": "Bearer <token>", "Content-Type": "application/json"}
-    payload = json.dumps({"query": "Items to carry for Everest expedition"})
-    response = requests.post(url, headers=headers, data=payload)
-    print(response.json())
-    </code>
-:
+    url_parts = urlsplit(endpoint.scoring_uri)
+    url = url_parts.scheme + "://" + url_parts.netloc
+
+    token = ml_client.online_endpoints.get_keys(name=online_endpoint_name).primary_key
+    headers = {"Authorization": "Bearer " + token, "Content-Type": "application/json"}
+    payload = json.dumps(
+        {
+            "query": "Items to carry for Everest expediation","enable-telemetry":True   # Pass the query to the endpoint and enable telemetry to APP Insights
+        }
+    )
+
+    response = requests.post(f"{url}/chat/products", headers=headers, data=payload)   # Call the endpoint to get LLM response
+    print(f"GenAI Response:\n", response)
+</code>
+
+2. **Send a GET request for /chat/evaluations**
+
+<code>
+    import requests, json
+    from urllib.parse import urlsplit
+
+    url_parts = urlsplit(endpoint.scoring_uri)
+    url = url_parts.scheme + "://" + url_parts.netloc
+
+    token = ml_client.online_endpoints.get_keys(name=online_endpoint_name).primary_key
+    headers = {"Authorization": "Bearer " + token, "Content-Type": "application/json"}
+
+    response = requests.get(f"{url}/chat/evaluations", headers=headers)   # Genearete evaluation for the prior LLM conversation
+    print(f"Evaluation Response:\n", response)
+</code>
+
 
 ## Processing Screenshots
 - **Tracing**
